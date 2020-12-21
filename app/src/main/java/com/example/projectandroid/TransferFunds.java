@@ -37,6 +37,8 @@ public class TransferFunds extends AppCompatActivity implements View.OnClickList
     fillData();
 
     ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,numberArray);
+    //using same data for the both spinners
+
     sender.setAdapter(aa);
     receiver.setAdapter(aa);
     sender.setOnItemSelectedListener(this);
@@ -63,7 +65,8 @@ public class TransferFunds extends AppCompatActivity implements View.OnClickList
             }
         });
         AlertDialog alert = alertDialogBuilder.create();
-        alert.show();            }
+        alert.show();
+    }
 
 
 
@@ -74,15 +77,15 @@ public class TransferFunds extends AppCompatActivity implements View.OnClickList
         }
         else {
             double transferAmount = Double.parseDouble(transferMoney.getText().toString());
-            double available = MainActivity.object.get(indexsend).getAmount(); // available balance in sender account
-            double recAvailable = MainActivity.object.get(indexrec).getAmount(); // available balance in receiver account
+            double available = MainActivity.object.get(indexsend).getAmount(); // extracting available balance in sender account using index of spinner
+            double recAvailable = MainActivity.object.get(indexrec).getAmount(); // extracting available balance in receiver account using index of spinner
 
             for (int i = 0; i < size; i++) {
                 if (transferAmount <= available) { //
                     double minus = available - transferAmount;
                     double plus = recAvailable + transferAmount;
-                    MainActivity.object.get(indexsend).setAmount(minus);
-                    MainActivity.object.get(indexrec).setAmount(plus);
+                    MainActivity.object.get(indexsend).setAmount(minus); // setting amount to remaining balance
+                    MainActivity.object.get(indexrec).setAmount(plus); // setting amount to updated balance
                     alertClass("Message", "Transaction Complete \n available balance in Sender account " + minus + " \n available balance in receiver account = " + plus, "Thank you");
                 } else {
                     alertClass("Error", "Balance is low", "OK :(");

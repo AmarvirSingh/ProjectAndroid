@@ -16,6 +16,7 @@ public class AddMoney extends AppCompatActivity implements View.OnClickListener 
     Button add;
     EditText accountNumber, amount;
     TextView details;
+    boolean bool = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,40 +34,47 @@ public class AddMoney extends AppCompatActivity implements View.OnClickListener 
     @Override
     public void onClick(View v) {
 
-        if (accountNumber.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Please Enter Account Number ", Toast.LENGTH_LONG).show();
-        } else if (amount.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Please Enter Amount ", Toast.LENGTH_LONG).show();
-        } else if (accountNumber.getText().toString().isEmpty() && amount.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Please Enter Account Number and Amount", Toast.LENGTH_LONG).show();
+        if (accountNumber.getText().toString().isEmpty() || amount.getText().toString().isEmpty()){  // checking if the fields are empty
+            Toast.makeText(this, "Please Fill the details", Toast.LENGTH_SHORT).show();
+        }else {
+            int number = 0;
+            double money = 0;
+
+                number = Integer.parseInt(accountNumber.getText().toString());
+                money = Double.parseDouble(amount.getText().toString());
+
+                for (int i = 0; i < MainActivity.object.size(); i++) {
+                if (number == MainActivity.object.get(i).getAccountNumber() && money > 0) { // making sure that user has filled some amount
+                    double availableBalance = MainActivity.object.get(i).getAmount();
+                    availableBalance = MainActivity.object.get(i).getAmount() + money;
+                    MainActivity.object.get(i).setAmount(availableBalance);
+                    bool = false;
+//                    details.setText("Amount Added");
+                    break;
+
+                } else {
+                    bool = true;
+                }
+            }
         }
-
-        int number = 0;
-        double money = 0 ;
-        if (!accountNumber.getText().toString().isEmpty() && !amount.getText().toString().isEmpty()) {
-            number = Integer.parseInt(accountNumber.getText().toString());
-            money = Double.parseDouble(amount.getText().toString());
-        }
-        for (int i = 0; i < MainActivity.object.size(); i++) {
-            if (number == MainActivity.object.get(i).getAccountNumber() && money > 0) { // making sure that user has filled some amount
-                double availableBalance = MainActivity.object.get(i).getAmount();
-                availableBalance = MainActivity.object.get(i).getAmount() + money;
-                MainActivity.object.get(i).setAmount(availableBalance);
-
-                details.setText("Amount Added");
-                break;
-
-            } else {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this).setTitle("Error").setMessage("No account found").setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                AlertDialog alert = alertDialogBuilder.create();
-                alert.show();            }
-
-
+        if (bool == true){
+            alertClass("Error","No Account Found","OK");
+        }else
+        {
+            alertClass("Message","Amount Added Successfully","Thank You");
         }
     }
+
+    public void alertClass(String title,String message , String button){
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this).setTitle(title).setMessage(message).setPositiveButton(button, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
+    }
+
 }

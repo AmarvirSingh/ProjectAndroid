@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class Bills extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
@@ -22,11 +25,15 @@ public class Bills extends AppCompatActivity implements View.OnClickListener, Ad
     ListView LV;
 
     int size = MainActivity.object.size();
-    String billNames []={"HYDRO","WATER","GAS","PHONE"};
+    String billNames []={"HYDRO","WATER","GAS","PHONE"}; // array to fill bill spinner
     String accountArray [] = new String[size];
-    String account;
+    String subscriptionNumber;
     String type;
+    String acount;
+    public static ArrayList<DetClass> detList = new ArrayList<>(); // this will be used in DetailsAdapter class
+
     int index;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +50,9 @@ public class Bills extends AppCompatActivity implements View.OnClickListener, Ad
         pay = findViewById(R.id.pay);
         LV = findViewById(R.id.LV);
 
+        LV.setAdapter(new DetailsAdapter(detList,this)); // showing data in list view on startup of the screen
+
+
         ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,billNames);
         billSP.setAdapter(aa);
         billSP.setOnItemSelectedListener(this);
@@ -50,6 +60,8 @@ public class Bills extends AppCompatActivity implements View.OnClickListener, Ad
         accountSP.setAdapter(bb);
         accountSP.setOnItemSelectedListener(this);
         pay.setOnClickListener(this);
+
+
 
 
     }
@@ -79,15 +91,28 @@ public class Bills extends AppCompatActivity implements View.OnClickListener, Ad
 
     @Override
     public void onClick(View v) {
-        double available = MainActivity.object.get(index).getAmount();
-        double amount = Double.parseDouble(billAmount.getText().toString());
-        for (int i =0;i<MainActivity.object.size();i++){
-           if (available >= amount){
 
-               // alert calss minus the amount show in list view;
+        if (subsNumber.getText().toString().isEmpty() || billAmount.getText().toString().isEmpty()){
+            Toast.makeText(this, "Please Fill the Details", Toast.LENGTH_SHORT).show();
+        }
+        else {
 
+            double available = MainActivity.object.get(index).getAmount();
+            double amount = Double.parseDouble(billAmount.getText().toString());
+            for (int i = 0; i < 1; i++) {    // here using 1 because we want to substract money only one time
+                if (available >= amount) {
+                    available -= amount;
+                    MainActivity.object.get(index).setAmount(available);
+                    //detList.clear();
+                    DetClass object = new DetClass(subsNumber.getText().toString(), type, billAmount.getText().toString(), acount); // creating object of DetClass
+                    detList.add(object);   // adding that object in detList
+                    LV.setAdapter(new DetailsAdapter(detList, this));   // sending that Array list of Det to Details Adapter to show number of rows and data
+                    alertClass("Message", "Bill Paid Successfully", "Thank you");
 
-           }
+                } else {
+                    alertClass("Error", "Low Balance !!!!!", "Ok");
+                }
+            }
         }
     }
 
@@ -95,12 +120,13 @@ public class Bills extends AppCompatActivity implements View.OnClickListener, Ad
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
         if (parent.getId() == R.id.billSP){
-            type = billNames[position];
+            type = billNames[position]; // gettting type of selected item in spinner
 
         }
         if ( parent.getId() == R.id.accountSP){
-            account = accountArray[position];
-            index = position;
+
+            index = position; //getting position of the selected item to use in arrays
+            acount = String.valueOf(MainActivity.object.get(position).getAccountNumber()); // getting account number
         }
     }
 

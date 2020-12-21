@@ -49,7 +49,7 @@ public class ShowBalance extends AppCompatActivity implements View.OnClickListen
                     break;
                 } else {
                     bool = true;
-                   // details.setText("Account Not Found");
+
 
                 }
             }

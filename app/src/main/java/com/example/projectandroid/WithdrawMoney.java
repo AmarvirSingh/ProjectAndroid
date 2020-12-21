@@ -15,6 +15,8 @@ public class WithdrawMoney extends AppCompatActivity implements View.OnClickList
     Button withdraw;
     EditText accountNumber, amount;
     TextView details;
+
+    boolean bool = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,39 +32,36 @@ public class WithdrawMoney extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
 
-        if (accountNumber.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Please Enter Account Number ", Toast.LENGTH_LONG).show();
-        } else if (amount.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Please Enter Amount ", Toast.LENGTH_LONG).show();
-        } else if (accountNumber.getText().toString().isEmpty() && amount.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Please Enter Account Number and Amount", Toast.LENGTH_LONG).show();
-        }
+        if (accountNumber.getText().toString().isEmpty() || amount.getText().toString().isEmpty()){
+            Toast.makeText(this, "Please Fill All Details", Toast.LENGTH_SHORT).show();
+        }else {
+            int number = 0;
+            double withdrawmoney = 0;
+            if (!accountNumber.getText().toString().isEmpty() && !amount.getText().toString().isEmpty()) {
+                number = Integer.parseInt(accountNumber.getText().toString());
+                withdrawmoney = Double.parseDouble(amount.getText().toString());
 
-
-        int number = 0;
-        double withdrawmoney = 0;
-        if (!accountNumber.getText().toString().isEmpty() && !amount.getText().toString().isEmpty()) {
-            number = Integer.parseInt(accountNumber.getText().toString());
-            withdrawmoney = Double.parseDouble(amount.getText().toString());
-
-        }
-        for (int i = 0; i < MainActivity.object.size(); i++) {
-            if (number == MainActivity.object.get(i).getAccountNumber() && withdrawmoney <= MainActivity.object.get(i).getAmount()) { // checking amount
-                double balance = MainActivity.object.get(i).getAmount() - withdrawmoney;
-                MainActivity.object.get(i).setAmount(balance);
-
-               // details.setText("Amount Added");
-                alertClass("Done",""+withdrawmoney + "Money WithDrawn \n Available balance = " +balance,"Thank you");
-                break;
-
-            } else {
-
-                    alertClass("Eroor","No Account Found","OK");
             }
+            for (int i = 0; i < MainActivity.object.size(); i++) {
+                if (number == MainActivity.object.get(i).getAccountNumber() && withdrawmoney <= MainActivity.object.get(i).getAmount()) { // checking amount
+                    double balance = MainActivity.object.get(i).getAmount() - withdrawmoney;
+                    MainActivity.object.get(i).setAmount(balance);
+                    bool = false;
+                    // details.setText("Amount Added");
+                    alertClass("Done", "" + withdrawmoney + " Money WithDrawn \n Available balance = " + balance, "Thank you");
+                    break;
 
-
+                } else {
+                    bool = true;
+                }
+            }
+            if (bool == true) {
+                alertClass("Eroor", "No Account Found", "OK");
+            }
         }
     }
+
+    // creating method for alert dialog box
     public void alertClass(String title,String message , String button){
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this).setTitle(title).setMessage(message).setPositiveButton(button, new DialogInterface.OnClickListener() {

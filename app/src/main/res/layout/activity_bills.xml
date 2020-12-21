@@ -21,10 +21,11 @@
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="52dp"
         android:text="Choose Bill"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
@@ -40,96 +41,147 @@
         android:id="@+id/textView15"
         android:layout_width="96dp"
         android:layout_height="26dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="40dp"
         android:text="Bill Amount"
-        tools:layout_editor_absoluteX="28dp"
-        tools:layout_editor_absoluteY="250dp" />
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
     <EditText
         android:id="@+id/billAmount"
-        android:layout_width="wrap_content"
+        android:layout_width="261dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
         android:ems="10"
         android:hint="Enter the Bill Amount"
         android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="165dp"
-        tools:layout_editor_absoluteY="241dp" />
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/subsNumber" />
 
     <Button
         android:id="@+id/pay"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
         android:text="Pay"
-        tools:layout_editor_absoluteX="147dp"
-        tools:layout_editor_absoluteY="368dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accountSP" />
 
     <ListView
         android:id="@+id/LV"
-        android:layout_width="411dp"
-        android:layout_height="197dp"
-        tools:layout_editor_absoluteX="-4dp"
-        tools:layout_editor_absoluteY="518dp" />
+        android:layout_width="0dp"
+        android:layout_height="193dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView24" />
 
     <TextView
         android:id="@+id/textView20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enter Subscription Number"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="192dp" />
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:text="Subscription Number"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
     <EditText
         android:id="@+id/subsNumber"
-        android:layout_width="wrap_content"
+        android:layout_width="202dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:inputType="number"
-        tools:layout_editor_absoluteX="197dp"
-        tools:layout_editor_absoluteY="177dp" />
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/textView20"
+        app:layout_constraintTop_toBottomOf="@+id/billSP" />
 
     <TextView
         android:id="@+id/textView21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="36dp"
         android:text="pay from"
-        tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="316dp" />
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
     <Spinner
         android:id="@+id/accountSP"
         android:layout_width="268dp"
         android:layout_height="24dp"
-        tools:layout_editor_absoluteX="143dp"
-        tools:layout_editor_absoluteY="313dp" />
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toEndOf="@+id/textView21"
+        app:layout_constraintTop_toBottomOf="@+id/billAmount" />
 
     <TextView
         android:id="@+id/textView22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="22dp"
         android:text="History"
-        tools:layout_editor_absoluteX="17dp"
-        tools:layout_editor_absoluteY="424dp" />
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pay" />
 
     <TextView
         android:id="@+id/textView23"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Subscription Number"
-        tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="485dp" />
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Subscription No."
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
     <TextView
         android:id="@+id/textView24"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:text="Bill Type"
-        tools:layout_editor_absoluteX="185dp"
-        tools:layout_editor_absoluteY="484dp" />
+        app:layout_constraintStart_toEndOf="@+id/textView23"
+        app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
     <TextView
         android:id="@+id/textView25"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:text="Amount"
-        tools:layout_editor_absoluteX="280dp"
-        tools:layout_editor_absoluteY="482dp" />
+        app:layout_constraintStart_toEndOf="@+id/textView24"
+        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+    <TextView
+        android:id="@+id/textView30"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Account No."
+        app:layout_constraintStart_toEndOf="@+id/textView25"
+        app:layout_constraintTop_toBottomOf="@+id/textView22" />
 </androidx.constraintlayout.widget.ConstraintLayout>
