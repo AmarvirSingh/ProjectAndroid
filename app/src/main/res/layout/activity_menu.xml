@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/backdesign"
     android:layout_height="match_parent"
     tools:context=".Menu">
 
@@ -25,13 +26,14 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/stoke_light"
         android:text="Menu"
-        android:textColor="#FFEB3B"
+        android:textColor="#FFFFFF"
         android:textSize="25sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -41,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
         android:layout_marginLeft="44dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="25dp"
         android:text="1. Show Balance"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -50,7 +52,7 @@
         android:id="@+id/am"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="15dp"
         android:text="2. Add Money"
         app:layout_constraintStart_toStartOf="@+id/sb"
         app:layout_constraintTop_toBottomOf="@+id/sb" />
@@ -59,7 +61,7 @@
         android:id="@+id/wm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="15dp"
         android:text="3. Withdraw Money"
         app:layout_constraintStart_toStartOf="@+id/am"
         app:layout_constraintTop_toBottomOf="@+id/am" />
@@ -68,7 +70,7 @@
         android:id="@+id/pb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="15dp"
         android:text="4. Pay Bills"
         app:layout_constraintStart_toStartOf="@+id/wm"
         app:layout_constraintTop_toBottomOf="@+id/wm" />
@@ -77,7 +79,7 @@
         android:id="@+id/tm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="15dp"
         android:text="5. Transfer Money"
         app:layout_constraintStart_toStartOf="@+id/pb"
         app:layout_constraintTop_toBottomOf="@+id/pb" />
@@ -86,10 +88,22 @@
         android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginRight="44dp"
         android:text="logout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.899"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tm" />
+
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:textColor="@color/white"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,7 +14,8 @@ import java.util.ArrayList;
 
 public class Menu extends AppCompatActivity implements View.OnClickListener {
 
-    TextView welcome;
+    TextView welcome,address;
+
 
     Button showBalance,addMoney,withdrawMoney,payBills,transferMoney,logout;
 
@@ -33,9 +34,11 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
         payBills=findViewById(R.id.pb);
         transferMoney=findViewById(R.id.tm);
         welcome = findViewById(R.id.textView3);
+        address = findViewById(R.id.address);
         logout = findViewById(R.id.logout);
 
         welcome.setText("Welcome " + MainActivity.object.get(0).getName());
+        address.setText(MainActivity.object.get(0).getAddress());
         showBalance.setOnClickListener(this);
         addMoney.setOnClickListener(this);
         withdrawMoney.setOnClickListener(this);

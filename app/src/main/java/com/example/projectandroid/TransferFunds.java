@@ -145,7 +145,10 @@ public class TransferFunds extends AppCompatActivity implements View.OnClickList
         }
 
 
-        if (v.getId() == R.id.transfer){
+        if (transferMoney.getText().toString().isEmpty() || etName.getText().toString().isEmpty() || etContact.getText().toString().isEmpty() || receiver.getText().toString().isEmpty()){  // checking if the fields are empty
+            Toast.makeText(this, "Please Fill the details", Toast.LENGTH_SHORT).show();
+        }
+        else if (v.getId() == R.id.transfer){
                 if (rb1.isChecked()){
                     transferAmount = Double.parseDouble(transferMoney.getText().toString());
                     receiveracc = Integer.parseInt(receiver.getText().toString());

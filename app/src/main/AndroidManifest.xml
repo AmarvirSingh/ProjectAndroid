@@ -9,8 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectAndroid">
-        <activity android:name=".TransferFundsOther"></activity>
-        <activity android:name=".ChooseTransferOption" />
         <activity android:name=".WithdrawMoney" />
         <activity android:name=".TransferFunds" />
         <activity

@@ -44,7 +44,7 @@ public class ShowBalance extends AppCompatActivity implements View.OnClickListen
                 if (number == MainActivity.object.get(i).getAccountNumber()) {
                     details.setText("Name = " + MainActivity.object.get(i).getName() + "\nBalance = "
                             + MainActivity.object.get(i).getAmount() + "\t("
-                            + MainActivity.object.get(i).getType() + ")");
+                            + MainActivity.object.get(i).getType() + ") \n Contact Number = "+MainActivity.object.get(i).getPhone());
                     bool = false;
                     break;
                 } else {
