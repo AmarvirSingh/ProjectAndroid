@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ArrayList<CustomerDetails> details = new ArrayList<>();
+    public static ArrayList<CustomerDetails> details = new ArrayList<>();
 
     String cNumber[] = {"1111", "1112", "1113", "1114"};
     //String  password[] = {1111, 1112, 1113, 1114};
