@@ -31,6 +31,7 @@ public class Bills extends AppCompatActivity implements View.OnClickListener, Ad
     String type;
     String acount;
     public static ArrayList<DetClass> detList = new ArrayList<>(); // this will be used in DetailsAdapter class
+    public static ArrayList<DetClass> detList1 = new ArrayList<>();
 
     int index;
 
@@ -49,9 +50,11 @@ public class Bills extends AppCompatActivity implements View.OnClickListener, Ad
 
         pay = findViewById(R.id.pay);
         LV = findViewById(R.id.LV);
-
+        if (MainActivity.object.get(0).getcNumber().equals("1111")) // if user with id 1111 log in show this on startup
         LV.setAdapter(new DetailsAdapter(detList,this)); // showing data in list view on startup of the screen
 
+        if (MainActivity.object.get(0).getcNumber().equals("1112"))// if user with id 1112 log in show this on startup
+            LV.setAdapter(new DetailsAdapter(detList1,this));
 
         ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,billNames);
         billSP.setAdapter(aa);
@@ -95,7 +98,7 @@ public class Bills extends AppCompatActivity implements View.OnClickListener, Ad
         if (subsNumber.getText().toString().isEmpty() || billAmount.getText().toString().isEmpty()){
             Toast.makeText(this, "Please Fill the Details", Toast.LENGTH_SHORT).show();
         }
-        else {
+        else if (MainActivity.object.get(0).getcNumber().equals("1111")){  // if user with id 1111 log in use this arraylist(detList) of bill details
 
             double available = MainActivity.object.get(index).getAmount();
             double amount = Double.parseDouble(billAmount.getText().toString());
@@ -107,6 +110,24 @@ public class Bills extends AppCompatActivity implements View.OnClickListener, Ad
                     DetClass object = new DetClass(subsNumber.getText().toString(), type, billAmount.getText().toString(), acount); // creating object of DetClass
                     detList.add(object);   // adding that object in detList
                     LV.setAdapter(new DetailsAdapter(detList, this));   // sending that Array list of Det to Details Adapter to show number of rows and data
+                    alertClass("Message", "Bill Paid Successfully", "Thank you");
+
+                } else {
+                    alertClass("Error", "Low Balance !!!!!", "Ok");
+                }
+            }
+        }
+        else if (MainActivity.object.get(0).getcNumber().equals("1112")){  // if user with id 1112 log in use this array list (detList1)of bill details
+            double available = MainActivity.object.get(index).getAmount();
+            double amount = Double.parseDouble(billAmount.getText().toString());
+            for (int i = 0; i < 1; i++) {    // here using 1 because we want to substract money only one time
+                if (available >= amount) {
+                    available -= amount;
+                    MainActivity.object.get(index).setAmount(available);
+                    //detList.clear();
+                    DetClass object = new DetClass(subsNumber.getText().toString(), type, billAmount.getText().toString(), acount); // creating object of DetClass
+                    detList1.add(object);   // adding that object in detList
+                    LV.setAdapter(new DetailsAdapter(detList1, this));   // sending that Array list of Det to Details Adapter to show number of rows and data
                     alertClass("Message", "Bill Paid Successfully", "Thank you");
 
                 } else {

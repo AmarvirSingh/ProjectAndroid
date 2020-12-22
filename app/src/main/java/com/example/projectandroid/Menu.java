@@ -3,6 +3,7 @@ package com.example.projectandroid;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -70,6 +71,9 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
             startActivity(intent);
         }else if (v.getId() == R.id.logout){
             MainActivity.object.clear();
+            MainActivity.details.clear();
+            //Bills.detList.clear();
+            Log.d("TAG", "onlogout: "+MainActivity.object.size());
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }

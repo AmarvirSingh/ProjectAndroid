@@ -34,6 +34,7 @@ public class TransferFunds extends AppCompatActivity implements View.OnClickList
     double transferAmount = 0;
     private static String recEmail = "";
     private int senderAccount = 0;
+    private String senderName = "";
     private static double totalMoney = 0;
     private static String enteredName = "";
     private static String enteredContact = "";
@@ -41,7 +42,7 @@ public class TransferFunds extends AppCompatActivity implements View.OnClickList
     private static double minus = 0;
 
     int size = MainActivity.object.size();
-     String numberArray[] = new String[size];
+    String numberArray[] = new String[size];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,11 +87,12 @@ public class TransferFunds extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    public void sendMail(String recipient, int senderAccount, String name, double amount, int receiverAccount){
+    public void sendMail(String recipient, String senderAccount, String name, double amount, int receiverAccount){
         Intent email = new Intent(Intent.ACTION_SEND);
-        email.putExtra(Intent.EXTRA_EMAIL,recipient);
+        email.putExtra(Intent.EXTRA_EMAIL,new String[]{recipient});
+
         email.putExtra(Intent.EXTRA_SUBJECT, "Money Transferred From "+senderAccount);
-        email.putExtra(Intent.EXTRA_TEXT, ""+amount+ "$ has been credited by "+name+ " to your Account Number "+receiverAccount);
+        email.putExtra(Intent.EXTRA_TEXT, ""+amount+ "$ has been credited  to your Account Number "+receiverAccount+ " MR." +name);
 
         email.setType("message/rfc822");
         startActivity(Intent.createChooser(email,"How To send mail"));
@@ -157,7 +159,7 @@ public class TransferFunds extends AppCompatActivity implements View.OnClickList
                     totalMoney = Double.parseDouble(transferMoney.getText().toString()); // this is for email  purposes
                     receiveracc = Integer.parseInt(receiver.getText().toString()); // this is for email purposes
                 }
-
+            senderName = MainActivity.object.get(indexsend).getName();  // extracting sender name for email purposes
             double available = MainActivity.object.get(indexsend).getAmount();// extracting available balance in sender account using index of spinner
             double recAvailable = getReceiveracc(receiveracc);
             if (recAvailable != -1) {
@@ -170,6 +172,7 @@ public class TransferFunds extends AppCompatActivity implements View.OnClickList
 
                         // setting some varibale for sending emails
                         recEmail = MainActivity.details.get(i).getMail();
+                        Log.d("TAG", "onClick trasfer succesfull: "+recEmail);
 
 
                         // some boolean value used for showing alert dialog boxes
@@ -194,8 +197,10 @@ public class TransferFunds extends AppCompatActivity implements View.OnClickList
         // SHOWING MESSAGES
         if (bool == true && showmessage == true) {
             if (rb1.isChecked()) {
+                showmessage = false;
                 alertClass("Message", "Transaction Complete \n available balance in Sender account " + minus + " \n available balance in receiver account = " + plus, "Thank you");
             }else if(rb2.isChecked()){
+                showmessage = false;
                 alertClass("Message","Transfer successfull", "OK");
             }
         }
@@ -204,7 +209,7 @@ public class TransferFunds extends AppCompatActivity implements View.OnClickList
         }
 
         if (v.getId() == R.id.sendemail){
-            sendMail(recEmail,senderacc,enteredName,transferAmount,receiveracc);
+            sendMail(recEmail,senderName,enteredName,transferAmount,receiveracc);
         }
 
     }
@@ -235,6 +240,7 @@ public class TransferFunds extends AppCompatActivity implements View.OnClickList
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
     if (parent.getId() == R.id.senderSP){
+
     senderacc = Integer.parseInt(numberArray[position]);  // converting string to integer value and getting value of sender account number
         indexsend = position;
     }

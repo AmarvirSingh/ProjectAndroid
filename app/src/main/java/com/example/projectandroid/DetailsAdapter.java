@@ -52,10 +52,10 @@ public class DetailsAdapter extends BaseAdapter {
             convertView.getId();
 
         }
-        holder.subscriptionNumber.setText(Bills.detList.get(position).getNumber());
-        holder.billType.setText(Bills.detList.get(position).getDetType());
-        holder.amount.setText(Bills.detList.get(position).getAmount());
-        holder.accountNumber.setText(Bills.detList.get(position).getAccount());
+        holder.subscriptionNumber.setText(det.get(position).getNumber());
+        holder.billType.setText(det.get(position).getDetType());
+        holder.amount.setText(det.get(position).getAmount());
+        holder.accountNumber.setText(det.get(position).getAccount());
 
         return convertView;
     }

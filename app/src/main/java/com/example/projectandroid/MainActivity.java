@@ -24,14 +24,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     EditText c_number, pin;
     Button login;
-    boolean bool = true;
+    boolean bool = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         fillData();
+
+
         c_number = findViewById(R.id.cno);
         pin = findViewById(R.id.cpin);
         login = findViewById(R.id.loginbtn);
@@ -49,10 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         details.add(new CustomerDetails(cNumber[1], cNumber[1], 20001,mailId[1], "Ranjeet Singh", "Current Account", "VPO Sohana, Mohali", "978451258", 1500));
         details.add(new CustomerDetails(cNumber[1], cNumber[1], 20002,mailId[1], "Ranjeet Singh", "Salary Account", "VPO Sohana, Mohali", "978451258", 1800));
         details.add(new CustomerDetails(cNumber[1], cNumber[1], 20003,mailId[1], "Ranjeet Singh", "Savings Account", "VPO Sohana, Mohali", "978451258", 2500));
-
     }
-
-
     @Override
     public void onClick(View v) {
 
@@ -69,26 +69,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 for (int j = 0; j < details.size(); j++) {
                     if (details.get(i).getcNumber().equals(details.get(j).getcNumber())) {
                         // add password check
+
                         object.add(details.get(j));
+
 
                     }
                 }
-                    // getting so much numbers in object array list
-
-                    Intent intent = new Intent(this, Menu.class);
-                    startActivity(intent);
-                    break;
-
+                bool = false;
+                Intent intent = new Intent(this,Menu.class);
+                startActivity(intent);
+                break;
             }
+            else{
+                bool = true;
+            }
+
         }
 
-
-        for (int i = 0; i < details.size(); i++) {
-            if ( !tempNum.equals(details.get(i).getcNumber()) ||  !tempPass.equals(details.get(i).getPassword())) {
-
-                Toast.makeText(getApplicationContext(), " Pin or cNumber is wrong", Toast.LENGTH_LONG).show();
-               break;
-            }
+        if(bool== true){
+            Toast.makeText(this, "Wrong Card Number or Pin", Toast.LENGTH_SHORT).show();
         }
     }
 }
