@@ -5,22 +5,31 @@ public class CustomerDetails {
     private String  cNumber;
     private String password;
     private  int accountNumber;
-
+    private String mail;
     private String name;
     private String type;
     private String address;
     private String phone;
     private double amount;
 
-    public CustomerDetails(String cNumber, String password, int accountNumber, String name, String type, String address, String phone, double amount) {
+    public CustomerDetails(String cNumber, String password, int accountNumber, String mail, String name, String type, String address, String phone, double amount) {
         this.cNumber = cNumber;
         this.password = password;
         this.accountNumber = accountNumber;
+        this.mail = mail;
         this.name = name;
         this.type = type;
         this.address = address;
         this.phone = phone;
         this.amount = amount;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
     public int getAccountNumber() {

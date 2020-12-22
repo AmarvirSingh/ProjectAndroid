@@ -15,7 +15,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
 
     TextView welcome;
 
-    Button showBalance,addMoney,withdrawMoney,payBills,transferMoney;
+    Button showBalance,addMoney,withdrawMoney,payBills,transferMoney,logout;
 
 
     @Override
@@ -32,12 +32,14 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
         payBills=findViewById(R.id.pb);
         transferMoney=findViewById(R.id.tm);
         welcome = findViewById(R.id.textView3);
+        logout = findViewById(R.id.logout);
 
         welcome.setText("Welcome " + MainActivity.object.get(0).getName());
         showBalance.setOnClickListener(this);
         addMoney.setOnClickListener(this);
         withdrawMoney.setOnClickListener(this);
         payBills.setOnClickListener(this);
+        logout.setOnClickListener(this);
         transferMoney.setOnClickListener(this);
     }
 
@@ -65,6 +67,10 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
             startActivity(intent);
         }else if(v.getId()==(R.id.tm)) {
             Intent intent = new Intent(this, TransferFunds.class);
+            startActivity(intent);
+        }else if (v.getId() == R.id.logout){
+            MainActivity.object.clear();
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
     }

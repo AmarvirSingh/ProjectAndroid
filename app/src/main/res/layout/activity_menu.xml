@@ -81,4 +81,15 @@
         android:text="5. Transfer Money"
         app:layout_constraintStart_toStartOf="@+id/pb"
         app:layout_constraintTop_toBottomOf="@+id/pb" />
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.899"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tm" />
 </androidx.constraintlayout.widget.ConstraintLayout>

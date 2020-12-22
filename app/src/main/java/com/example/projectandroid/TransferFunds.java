@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,14 +24,17 @@ public class TransferFunds extends AppCompatActivity implements View.OnClickList
     TextView name, contact;
 
     Spinner sender;
-    Button transfer;
+    Button transfer,sendemail;
     EditText transferMoney,etContact, etName,receiver;
 
     int senderacc,  receiveracc;
     int indexsend, indexrec;
     boolean bool = false;
     boolean showmessage = false;
-
+    double transferAmount = 0;
+    private static String recEmail = "";
+    private int senderAccount = 0;
+    private static double totalMoney = 0;
     private static String enteredName = "";
     private static String enteredContact = "";
     private static double plus = 0;
@@ -43,7 +47,7 @@ public class TransferFunds extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer_funds);
 
-
+    sendemail = findViewById(R.id.sendemail);
     sender = findViewById(R.id.senderSP);
     receiver = findViewById(R.id.receiver);
     transferMoney = findViewById(R.id.transferMoney);
@@ -66,7 +70,8 @@ public class TransferFunds extends AppCompatActivity implements View.OnClickList
 
     sender.setOnItemSelectedListener(this);
 
-
+    sendemail.setEnabled(false);
+    sendemail.setOnClickListener(this);
 
     transfer.setOnClickListener(this);
 
@@ -81,7 +86,16 @@ public class TransferFunds extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    public void sendMail(){
+    public void sendMail(String recipient, int senderAccount, String name, double amount, int receiverAccount){
+        Intent email = new Intent(Intent.ACTION_SEND);
+        email.putExtra(Intent.EXTRA_EMAIL,recipient);
+        email.putExtra(Intent.EXTRA_SUBJECT, "Money Transferred From "+senderAccount);
+        email.putExtra(Intent.EXTRA_TEXT, ""+amount+ "$ has been credited by "+name+ " to your Account Number "+receiverAccount);
+
+        email.setType("message/rfc822");
+        startActivity(Intent.createChooser(email,"How To send mail"));
+
+
 
     }
     // class for dialog box
@@ -118,14 +132,16 @@ public class TransferFunds extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         if (v.getId() == R.id.rb1) {
                 setRB1invisible();
-            showmessage = false; // setting this to false because we dont want to show message every time we change radio buttons
+                sendemail.setEnabled(false); // everytime user click on radio button button will be disabled
+                showmessage = false; // setting this to false because we dont want to show message every time we change radio buttons
         }
 
         if (v.getId() == R.id.rb2){
             setRB2Visible();
+            sendemail.setEnabled(false); // every time user click radobutton email button will be disabled
             showmessage = false;
         }
-        double transferAmount = 0;
+
 
         if (v.getId() == R.id.transfer){
                 if (rb1.isChecked()){
@@ -136,9 +152,10 @@ public class TransferFunds extends AppCompatActivity implements View.OnClickList
                 }else if (rb2.isChecked()){
 
                     transferAmount = Double.parseDouble(transferMoney.getText().toString());
-                    enteredName = etName.getText().toString();
-                    enteredContact = etContact.getText().toString();
-                    receiveracc = Integer.parseInt(receiver.getText().toString());
+                    enteredName = etName.getText().toString();  // this is for email purposes
+                    enteredContact = etContact.getText().toString(); //
+                    totalMoney = Double.parseDouble(transferMoney.getText().toString()); // this is for email  purposes
+                    receiveracc = Integer.parseInt(receiver.getText().toString()); // this is for email purposes
                 }
 
             double available = MainActivity.object.get(indexsend).getAmount();// extracting available balance in sender account using index of spinner
@@ -149,10 +166,15 @@ public class TransferFunds extends AppCompatActivity implements View.OnClickList
                         minus = available - transferAmount;
                         plus = recAvailable + transferAmount;
                         MainActivity.object.get(indexsend).setAmount(minus);// setting amount to remaining balance
-                         setAmountinReceiverAccount(receiveracc,plus);   // setting amount to updated balance
+                        setAmountinReceiverAccount(receiveracc,plus);   // setting amount to updated balance
+
+                        // setting some varibale for sending emails
+                        recEmail = MainActivity.details.get(i).getMail();
+
 
                         // some boolean value used for showing alert dialog boxes
-
+                        if (rb2.isChecked())
+                            sendemail.setEnabled(true);
                         bool = true;
                         showmessage = true;
                         break;
@@ -170,11 +192,19 @@ public class TransferFunds extends AppCompatActivity implements View.OnClickList
         }
 
         // SHOWING MESSAGES
-        if (bool == true && showmessage == true){
-            alertClass("Message", "Transaction Complete \n available balance in Sender account " + minus + " \n available balance in receiver account = " + plus, "Thank you");
+        if (bool == true && showmessage == true) {
+            if (rb1.isChecked()) {
+                alertClass("Message", "Transaction Complete \n available balance in Sender account " + minus + " \n available balance in receiver account = " + plus, "Thank you");
+            }else if(rb2.isChecked()){
+                alertClass("Message","Transfer successfull", "OK");
+            }
         }
         else if (bool == false && showmessage == true){
             alertClass("Error", "Balance is low", "OK :(");
+        }
+
+        if (v.getId() == R.id.sendemail){
+            sendMail(recEmail,senderacc,enteredName,transferAmount,receiveracc);
         }
 
     }
