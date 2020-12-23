@@ -61,7 +61,7 @@ public class TransferFunds extends AppCompatActivity implements View.OnClickList
     etContact = findViewById(R.id.etContact);
 
 
-    fillData();
+    fillAccountData();
     setRB1invisible();
 
     ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,numberArray);
@@ -81,7 +81,7 @@ public class TransferFunds extends AppCompatActivity implements View.OnClickList
     }
 
     // filling the account numbers
-    public void fillData(){
+    public void fillAccountData(){
         for (int i =0; i< MainActivity.object.size(); i++){
             numberArray[i] = String.valueOf(MainActivity.object.get(i).getAccountNumber());
         }
@@ -132,68 +132,126 @@ public class TransferFunds extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
+
         if (v.getId() == R.id.rb1) {
                 setRB1invisible();
                 sendemail.setEnabled(false); // everytime user click on radio button button will be disabled
                 showmessage = false; // setting this to false because we dont want to show message every time we change radio buttons
+
         }
 
         if (v.getId() == R.id.rb2){
             setRB2Visible();
-            sendemail.setEnabled(false); // every time user click radobutton email button will be disabled
+            etName.setEnabled(true);
+           //every time user click radobutton email button will be disabled
             showmessage = false;
         }
 
 
-        if (transferMoney.getText().toString().isEmpty() || etName.getText().toString().isEmpty() || etContact.getText().toString().isEmpty() || receiver.getText().toString().isEmpty()){  // checking if the fields are empty
-            Toast.makeText(this, "Please Fill the details", Toast.LENGTH_SHORT).show();
-        }
-        else if (v.getId() == R.id.transfer){
-                if (rb1.isChecked()){
-                    transferAmount = Double.parseDouble(transferMoney.getText().toString());
-                    receiveracc = Integer.parseInt(receiver.getText().toString());
-
-
-                }else if (rb2.isChecked()){
-
-                    transferAmount = Double.parseDouble(transferMoney.getText().toString());
-                    enteredName = etName.getText().toString();  // this is for email purposes
-                    enteredContact = etContact.getText().toString(); //
-                    totalMoney = Double.parseDouble(transferMoney.getText().toString()); // this is for email  purposes
-                    receiveracc = Integer.parseInt(receiver.getText().toString()); // this is for email purposes
+        if (v.getId() == R.id.transfer) {
+            if (rb1.isChecked()) {
+                if (transferMoney.getText().toString().isEmpty() || receiver.getText().toString().isEmpty()) {
+                    Toast.makeText(this, "please enter all the fields", Toast.LENGTH_SHORT).show();
                 }
-            senderName = MainActivity.object.get(indexsend).getName();  // extracting sender name for email purposes
-            double available = MainActivity.object.get(indexsend).getAmount();// extracting available balance in sender account using index of spinner
-            double recAvailable = getReceiveracc(receiveracc);
-            if (recAvailable != -1) {
-                for (int i = 0; i < size; i++) {
-                    if (transferAmount <= available) { //
-                        minus = available - transferAmount;
-                        plus = recAvailable + transferAmount;
-                        MainActivity.object.get(indexsend).setAmount(minus);// setting amount to remaining balance
-                        setAmountinReceiverAccount(receiveracc,plus);   // setting amount to updated balance
-
-                        // setting some varibale for sending emails
-                        recEmail = MainActivity.details.get(i).getMail();
-                        Log.d("TAG", "onClick trasfer succesfull: "+recEmail);
+                else{
+                    if (rb1.isChecked()) {
+                        transferAmount = Double.parseDouble(transferMoney.getText().toString());
+                        receiveracc = Integer.parseInt(receiver.getText().toString());
 
 
-                        // some boolean value used for showing alert dialog boxes
-                        if (rb2.isChecked())
-                            sendemail.setEnabled(true);
-                        bool = true;
-                        showmessage = true;
-                        break;
+                    } else if (rb2.isChecked()) {
 
+                        transferAmount = Double.parseDouble(transferMoney.getText().toString());
+                        enteredName = etName.getText().toString();  // this is for email purposes
+                        enteredContact = etContact.getText().toString(); //
+                        totalMoney = Double.parseDouble(transferMoney.getText().toString()); // this is for email  purposes
+                        receiveracc = Integer.parseInt(receiver.getText().toString()); // this is for email purposes
+                    }
+                    senderName = MainActivity.object.get(indexsend).getName();  // extracting sender name for email purposes
+                    double available = MainActivity.object.get(indexsend).getAmount();// extracting available balance in sender account using index of spinner
+                    double recAvailable = getReceiveracc(receiveracc);
+                    if (recAvailable != -1) {
+                        for (int i = 0; i < size; i++) {
+                            if (transferAmount <= available) { //
+                                minus = available - transferAmount;
+                                plus = recAvailable + transferAmount;
+                                MainActivity.object.get(indexsend).setAmount(minus);// setting amount to remaining balance
+                                setAmountinReceiverAccount(receiveracc, plus);   // setting amount to updated balance
+
+                                // setting some varibale for sending emails
+                                recEmail = MainActivity.details.get(i).getMail();
+                                Log.d("TAG", "onClick trasfer succesfull: " + recEmail);
+
+
+                                // some boolean value used for showing alert dialog boxes
+                                if (rb2.isChecked())
+                                    sendemail.setEnabled(true);
+                                bool = true;
+                                showmessage = true;
+                                break;
+
+                            } else {
+                                bool = false;
+                                showmessage = true;
+
+                            }
+                        }
                     } else {
-                        bool = false;
-                        showmessage = true;
+                        Toast.makeText(this, "Please check the account Number", Toast.LENGTH_SHORT).show();
+                    }
 
+                }
+            } else if (rb2.isChecked()) {
+                if (transferMoney.getText().toString().isEmpty() || etName.getText().toString().isEmpty() || etContact.getText().toString().isEmpty() || receiver.getText().toString().isEmpty()) {  // checking if the fields are empty
+                    Toast.makeText(this, "Please Fill the details", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    if (rb1.isChecked()) {
+                        transferAmount = Double.parseDouble(transferMoney.getText().toString());
+                        receiveracc = Integer.parseInt(receiver.getText().toString());
+
+
+                    } else if (rb2.isChecked()) {
+
+                        transferAmount = Double.parseDouble(transferMoney.getText().toString());
+                        enteredName = etName.getText().toString();  // this is for email purposes
+                        enteredContact = etContact.getText().toString(); //
+                        totalMoney = Double.parseDouble(transferMoney.getText().toString()); // this is for email  purposes
+                        receiveracc = Integer.parseInt(receiver.getText().toString()); // this is for email purposes
+                    }
+                    senderName = MainActivity.object.get(indexsend).getName();  // extracting sender name for email purposes
+                    double available = MainActivity.object.get(indexsend).getAmount();// extracting available balance in sender account using index of spinner
+                    double recAvailable = getReceiveracc(receiveracc);
+                    if (recAvailable != -1) {
+                        for (int i = 0; i < size; i++) {
+                            if (transferAmount <= available) { //
+                                minus = available - transferAmount;
+                                plus = recAvailable + transferAmount;
+                                MainActivity.object.get(indexsend).setAmount(minus);// setting amount to remaining balance
+                                setAmountinReceiverAccount(receiveracc, plus);   // setting amount to updated balance
+
+                                // setting some varibale for sending emails
+                                recEmail = MainActivity.details.get(i).getMail();
+                                Log.d("TAG", "onClick trasfer succesfull: " + recEmail);
+
+
+                                // some boolean value used for showing alert dialog boxes
+                                if (rb2.isChecked())
+                                    sendemail.setEnabled(true);
+                                bool = true;
+                                showmessage = true;
+                                break;
+
+                            } else {
+                                bool = false;
+                                showmessage = true;
+
+                            }
+                        }
+                    } else {
+                        Toast.makeText(this, "Please check the account Number", Toast.LENGTH_SHORT).show();
                     }
                 }
-            }
-            else{
-                Toast.makeText(this, "Please check the account Number", Toast.LENGTH_SHORT).show();
             }
         }
 
