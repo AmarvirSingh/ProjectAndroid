@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 public class Menu extends AppCompatActivity implements View.OnClickListener {
 
     TextView welcome,address;
-
+    ImageView image;
 
     Button showBalance,addMoney,withdrawMoney,payBills,transferMoney,logout;
 
@@ -36,8 +37,11 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
         welcome = findViewById(R.id.textView3);
         address = findViewById(R.id.address);
         logout = findViewById(R.id.logout);
+        image = findViewById(R.id.imageView2);
 
-        welcome.setText("Welcome " + MainActivity.object.get(0).getName());
+        int imgId = getResources().getIdentifier(MainActivity.object.get(0).getImage(),"mipmap",getPackageName());
+        image.setImageResource(imgId);
+        welcome.setText( MainActivity.object.get(0).getName());
         address.setText(MainActivity.object.get(0).getAddress());
         showBalance.setOnClickListener(this);
         addMoney.setOnClickListener(this);
@@ -79,6 +83,7 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
             Log.d("TAG", "onlogout: "+MainActivity.object.size());
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 }

@@ -64,6 +64,7 @@ public class ShowBalance extends AppCompatActivity implements View.OnClickListen
             });
             AlertDialog alert = alertDialogBuilder.create();
             alert.show();
+            details.setText("");
 
         }
     }

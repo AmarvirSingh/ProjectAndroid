@@ -6,22 +6,32 @@ public class CustomerDetails {
     private String password;
     private  int accountNumber;
     private String mail;
+    private String image;
     private String name;
     private String type;
     private String address;
     private String phone;
     private double amount;
 
-    public CustomerDetails(String cNumber, String password, int accountNumber, String mail, String name, String type, String address, String phone, double amount) {
+    public CustomerDetails(String cNumber, String password, int accountNumber, String mail, String image, String name, String type, String address, String phone, double amount) {
         this.cNumber = cNumber;
         this.password = password;
         this.accountNumber = accountNumber;
         this.mail = mail;
+        this.image = image;
         this.name = name;
         this.type = type;
         this.address = address;
         this.phone = phone;
         this.amount = amount;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getMail() {
