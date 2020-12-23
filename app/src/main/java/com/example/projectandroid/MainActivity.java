@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String cNumber[] = {"1111", "1112", "1113", "1114","1115","1116"};
     String mailId[] = {"kaintpunjabi06@gmail.com","rsdhiman1998@gmail.com","simranaug24@gmail.com","avtargill888@gmail.com","rajveerkaur20@gmail.com","mrsingh1080@gmail.com"};
     String images[] = {"amar","ranjeet","simran","babbumaan","rajveer","lali"};
-    //String  password[] = {1111, 1112, 1113, 1114};
+
 
     public static ArrayList<CustomerDetails> object = new ArrayList<>() ;
 

@@ -52,9 +52,6 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-
-
-
     @Override
     public void onClick(View v) {
         if(v.getId()==(R.id.sb))
@@ -79,11 +76,11 @@ public class Menu extends AppCompatActivity implements View.OnClickListener {
         }else if (v.getId() == R.id.logout){
             MainActivity.object.clear();
             MainActivity.details.clear();
-            //Bills.detList.clear();
-            Log.d("TAG", "onlogout: "+MainActivity.object.size());
+
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
+
         }
     }
 }
